@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from twilio.twiml.messaging_response import MessagingResponse
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def whatsapp_reply(request):
         incomming_msg = request.POST.get('Body', '').lower()
         resp  = MessagingResponse()
@@ -15,4 +17,3 @@ def whatsapp_reply(request):
                 msg.body(f" You said: {incomming_msg}")
         
         return HttpResponse(str(resp), content_type='application/xml')
-        
